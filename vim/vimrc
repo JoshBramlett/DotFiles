@@ -20,6 +20,13 @@ autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 " Show line numbers
 set number
 
+" Prettify
+syntax on
+filetype plugin indent on
+
+" Change leader character
+let mapleader=","
+
 " Tabs set at 4 spaces
 set tabstop=4 shiftwidth=4 expandtab
 
@@ -42,10 +49,6 @@ nnoremap <silent> <Leader>ev :tabnew<CR>:e ~/.vimrc<CR>
 " Pathogen support
 execute pathogen#infect()
 execute pathogen#helptags()
-
-" Prettify
-syntax on
-filetype plugin indent on
 
 " Always show airline statusline
 set laststatus=2
