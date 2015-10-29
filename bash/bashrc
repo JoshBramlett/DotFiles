@@ -1,0 +1,105 @@
+#------------------------------------
+#     Source Global Definitions
+#------------------------------------
+
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+#------------------------------------
+#              Colors 
+#------------------------------------
+
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
+
+#------------------------------------
+#         Personal Aliases
+#------------------------------------
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias ..='cd ..'
+alias ls='ls -a'
+alias ll='ls -Galoh'
+
+# list top 10 files by size in descending order
+alias ducks='du -cks * | sort -rn | head -11'
+
+# required when launching meld from gnome
+alias meld='dbus-launch meld'
+
+#------------------------------------
+#            Git Stuff
+#------------------------------------
+
+# Show branch in prompt
+export PS1="\h \[\033[1;34m\]\$(__git_ps1) \[\033[0;0m\]\w>"
+source ~/git-prompt.sh
+source ~/git-completion.bash
+
+# enable/disable git debug logging
+# usage:
+#   gitdebug on (default)
+#   gitdebug off
+function gitdebug()
+{
+  if [ "$1" = "off" ] ; then
+    export GIT_TRACE_PACKET=0 GIT_TRACE=0
+  else
+    export GIT_TRACE_PACKET=1 GIT_TRACE=1
+  fi
+}
+
+#------------------------------------
+#        Misc User Functions
+#------------------------------------
+
+# marks a file as old to prepare for copying a new file in the same dir
+function old()
+{
+  if [ "$1" = "-r" ] ; then
+    base=$(basename $2 .old)
+    if [ -f $2 -a ! -f $base ] ; then
+      mv $2 $base
+    else
+      echo "Failed: '$2' is not old."
+    fi
+  else
+    if [ -f $1 ] ; then
+      mv $1 $1.old
+    else
+      echo "Failed: '$1' is not valid."
+    fi
+  fi
+}
+
+# Handy Extract Program
+function extract()      
+{
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xvjf $1     ;;
+            *.tar.gz)    tar xvzf $1     ;;
+            *.bz2)       bunzip2 $1      ;;
+            *.rar)       unrar x $1      ;;
+            *.gz)        gunzip $1       ;;
+            *.tar)       tar xvf $1      ;;
+            *.tbz2)      tar xvjf $1     ;;
+            *.tgz)       tar xvzf $1     ;;
+            *.zip)       unzip $1        ;;
+            *.Z)         uncompress $1   ;;
+            *.7z)        7z x $1         ;;
+            *)           echo "'$1' cannot be extracted via >extract<" ;;
+        esac
+    else
+        echo "'$1' is not a valid file!"
+    fi
+}
+
+# Creates an archive (*.tar.gz) from given directory.
+function maketar() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }
+
+# Create a ZIP archive of a file or folder.
+function makezip() { zip -r "${1%%/}.zip" "$1" ; }

@@ -1,0 +1,51 @@
+" Just in case
+set nocompatible
+
+" Set terminal title to "vim:<file>"
+set title
+autocmd BufEnter * let &titlestring = "vim:" . expand("%:t")
+
+" Highlight chars that go over 100 columns
+if exists('+colorcolumn')
+  set colorcolumn=101
+  highlight ColorColumn ctermbg=red
+else
+  highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+  match OverLength /\%101v.\+/
+endif
+
+" Automagically remove all trailing whitespace
+autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
+
+" Show line numbers
+set number
+
+" Tabs set at 4 spaces
+set tabstop=4 shiftwidth=4 expandtab
+
+" Highlight and make searches case-insensitive
+set incsearch
+set ignorecase
+
+" New tab
+nnoremap <silent> <C-t> :tabnew<CR>
+
+" Next tab
+nnoremap <silent> <C-Right> :tabnext<CR>
+
+" Previous tab
+nnoremap <silent> <C-Left> :tabprevious<CR>
+
+" Edit vimrc \ev
+nnoremap <silent> <Leader>ev :tabnew<CR>:e ~/.vimrc<CR>
+
+" Pathogen support
+execute pathogen#infect()
+execute pathogen#helptags()
+
+" Prettify
+syntax on
+filetype plugin indent on
+
+" Always show airline statusline
+set laststatus=2
