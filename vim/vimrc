@@ -14,18 +14,26 @@ else
   match OverLength /\%101v.\+/
 endif
 
+" Highlight search result
+set hlsearch
+highlight Search guibg=Yellow guifg=Black ctermbg=Yellow ctermfg=Black
+
 " Automagically remove all trailing whitespace
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 
-" Show line numbers
+" Show relative line numbers except cursor (version >= 7.4)
+set relativenumber
 set number
+set numberwidth=2
 
 " Prettify
-syntax on
+syntax enable
 filetype plugin indent on
+set background=light
 
 " Change leader character
-let mapleader=","
+nnoremap <SPACE> <Nop>
+let mapleader=" "
 
 " Tabs set at 4 spaces
 set tabstop=4 shiftwidth=4 expandtab
@@ -46,9 +54,17 @@ nnoremap <silent> <C-Left> :tabprevious<CR>
 " Edit vimrc \ev
 nnoremap <silent> <Leader>ev :tabnew<CR>:e ~/.vimrc<CR>
 
+let macvim_skip_colorscheme=1
+
 " Pathogen support
 execute pathogen#infect()
 execute pathogen#helptags()
+
+" Remove annoying brace highlight in vim-cpp-enhanced-highlight
+let c_no_curly_error=1
+
+" Vertical indentation line color
+let g:indentLine_color_term = 100
 
 " Always show airline statusline
 set laststatus=2
