@@ -10,6 +10,10 @@ if [ -f ~/.bash_aliases ]; then
         . ~/.bash_aliases
 fi
 
+if [ -f ~/Documents/Projects/RDGE/rdge.sh ]; then
+        . ~/Documents/Projects/RDGE/rdge.sh
+fi
+
 #------------------------------------
 #       Command Line Support
 #------------------------------------
@@ -33,7 +37,7 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias ..='cd ..'
 alias ls='ls -a'
-alias ll='ls -Galoh --color=auto'
+alias ll='ls -Galoh'
 alias clear="clear && printf '\e[3J'"
 
 # list top 10 files by size in descending order

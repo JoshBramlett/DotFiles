@@ -26,6 +26,10 @@ set relativenumber
 set number
 set numberwidth=2
 
+" https://vi.stackexchange.com/questions/422/displaying-tabs-as-characters
+set list
+set listchars=tab:>-
+
 " Prettify
 syntax enable
 filetype plugin indent on
@@ -53,6 +57,10 @@ nnoremap <silent> <C-Left> :tabprevious<CR>
 
 " Edit vimrc \ev
 nnoremap <silent> <Leader>ev :tabnew<CR>:e ~/.vimrc<CR>
+
+" List todo items in quickfix window
+command Todo vimgrep /TODO/ include/**/*.* src/**/*.*
+nnoremap <silent> <Leader>todo :Todo<CR>:copen<CR><C-w>H
 
 let macvim_skip_colorscheme=1
 
